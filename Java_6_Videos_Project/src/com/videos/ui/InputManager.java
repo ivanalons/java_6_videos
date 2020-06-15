@@ -244,41 +244,17 @@ public class InputManager {
 			}
 		}
 		
-		//GregorianCalendar gc = new GregorianCalendar(year,month-1,day);
-		//Date date = gc.getTime();
-		
 		return date;
 	}
-	// TODO es pot optimitzar cridant askInt("Selecciona una opció");
+	
+
 	public int askOption(int minInt, int maxInt) {
 		
 		return askInt("Selecciona una opció",minInt,maxInt);
 		
-		/*
-		int option= 0;
-		boolean numberFormat = false;
-		
-		System.out.println("Selecciona una opció:");
-		
-		while(numberFormat==false) {
-			if (this.input.hasNextInt()) {
-				option = this.input.nextInt();
-				if(option>=minInt && option<=maxInt) {
-					numberFormat=true;
-				}else {
-					System.out.println("Tria una opció introduint un número entre "+minInt+ " i "+maxInt);
-				}
-			}else {
-				System.out.println("Tria una opció introduint un número entre "+minInt+ " i "+maxInt);
-			}
-			this.input.nextLine();
-		}
-		
-		return option;
-		*/
 	}
 	
-public int askInt(String questionMessage,int minInt, int maxInt) {
+	public int askInt(String questionMessage,int minInt, int maxInt) {
 		
 		int option= 0;
 		boolean numberFormat = false;
