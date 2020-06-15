@@ -1,7 +1,8 @@
 package com.videos.exceptions;
 
-public class EmptyFieldException extends Exception{
-
+//Es dispara quan es detecta un camp buit al intentar crear un usuari o un video
+public class EmptyFieldException extends Exception{ 
+	
 	public EmptyFieldException() {
 		super();
 	}

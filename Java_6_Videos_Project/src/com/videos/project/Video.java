@@ -11,17 +11,13 @@ public class Video {
 	private String title;
 	private List<String> tagsList;
 	
-	/*
-	public Video() throws Exception{ //No es poden afegir camps buits!!!
-		this.URL="";
-		this.title="";
-		this.tagsList= new ArrayList<>();
-	}*/
-	
 	public Video(String URL, String title) throws Exception{
 		this.URL = URL;
 		this.title = title;
 		this.tagsList= new ArrayList<>();
+		
+		// comprova si existeix algun camp buit (URL o title)
+		//  en cas afirmatiu dispara una excepció de tipus EmptyFieldException
 		this.checkFields();
 	}
 
@@ -42,6 +38,8 @@ public class Video {
 		return tagsList;
 	}
 	
+	// Afegeix un nou tag a la llista de tags "tagsList" de l'objecte Video
+	// Si el tag que es vol afegir al video esta buit dispara una excepció de tipus EmptyFieldException
 	public void addTag(String tag) throws Exception {
 		if (tag.equals("")) throw new EmptyFieldException("El camp tag no pot ser buit.");
 		this.tagsList.add(tag);

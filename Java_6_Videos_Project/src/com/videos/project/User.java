@@ -15,6 +15,7 @@ public class User {
 	private Date registerDate;
 	private List<Video> videosList;
 	
+	// constructor definit inicialment pero no usat al codi del projecte
 	public User( String name, String surname, String password ) throws EmptyFieldException{
 		this.name = name;
 		this.surname = surname;
@@ -33,7 +34,9 @@ public class User {
 		this.registerDate = date;
 		this.videosList = new ArrayList<>();
 		
-		this.checkFields();
+		// comprova si existeix algun camp buit (name o surname o password)
+		//  en cas afirmatiu dispara una excepció de tipus EmptyFieldException
+		this.checkFields(); 
 	}
 	
 	public void checkFields() throws EmptyFieldException {

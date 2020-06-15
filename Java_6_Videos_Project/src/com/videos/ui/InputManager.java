@@ -13,8 +13,8 @@ import com.videos.project.Video;
 public class InputManager {
 	
 	Scanner input;
-	List<User> userList;
-	User currentUser = null; 
+	List<User> userList; //Llista de usuaris creats
+	User currentUser = null;  //Usuari actual seleccionat
 	
 	public InputManager() {
 		this.input = new Scanner(System.in);
@@ -25,6 +25,12 @@ public class InputManager {
 		this.input.close();
 	}
 	
+	/**
+	 * Mostra el menu d'opcions per consola
+	 * Si hi ha un usuari actual seleccionat es mostra a continuació del menú
+	 * Es demana a l'usuari que seleccioni una opció entre 1 i 5 a l'entrada de dades de la consola
+	 * Si es selecciona la opció 5 es surt del programa
+	 */
 	public void showMenu() {
 		System.out.println("--------------------------------------------- ");
 		System.out.println("                    MENU");
@@ -65,7 +71,11 @@ public class InputManager {
 	}
 	
 	
-	
+	/**
+	 * Es crea un nou usuari a partir de les dades introduïdes per consola per part de l'usuari
+	 * Si s'intenta crear un usuari amb algun camp buit es torna a demanar de nou totes les dades
+	 * Finalment s'afegeix l'usuari creat a la llista "userList" del InputManager
+	 */
 	public void createUser() {
 		
 		String name,surname,password;
@@ -99,11 +109,18 @@ public class InputManager {
 		
 	}
 	
+	/**
+	 * Es mostra el nom i cognom de tots els usuaris amb un index a l'esquerra
+	 * Els usuaris existents fins al moment estan guardats a la llista "userList" de la classe InputManager
+	 * Es demana a l'usuari que seleccioni un usuari introduint el número de l'index corresponent
+	 * L'usuari seleccionat es guarda a l'atribut currentUser de la classe InputManager
+	 */
 	public void chooseUser() {
 		System.out.println("------------------");
 		System.out.println("SELECCIONAR USUARI");
 		System.out.println("------------------");
 		
+		//Mostra tots els usuaris per consola
 		for(int i=0;i<userList.size();i++) {
 			User u = userList.get(i);
 			System.out.println(i+". "+ u.getName() + " "+u.getSurname());
@@ -111,22 +128,33 @@ public class InputManager {
 		
 		System.out.println("------------------");
 		
+		//Es demana per consola escollir un usuari i es mostra per pantalla l'usuari seleccionat
 		if (this.userList.size()>0) {
 			int option = this.askOption(0, userList.size()-1);
 			this.currentUser = userList.get(option);
 			this.showCurrentUser();
 
-		} else {
+		} else { //si no hi cap usuari seleccionat es mostra missatge per pantalla
 			System.out.println("Encara no has creat cap usuari!");
 		}
 		pause();
 	}
 	
+	/**
+	 * Mostra usuari actual seleccionat per pantalla
+	 * Es a dir, l'usuari instanciat a l'atribut "currentUser" de la classe actual InputManager
+	 */
 	public void showCurrentUser() {
 		System.out.println("USUARI ACTUAL SELECCIONAT: "+ this.currentUser.getName().toUpperCase() + 
 		           " " + this.currentUser.getSurname().toUpperCase());
 	}
 	
+	/**
+	 * Crea un nou video per a l'usuari actual seleccionat (currentUser)
+	 * Si algun dels camps de l'objecte video (url o titol) es torna a demanar introduir de nou
+	 * totes les dades del video
+	 * S'afegeix el video a la llista de videos de l'usuari
+	 */
 	public void createVideo() {
 		
 		Video video = null;
@@ -135,10 +163,10 @@ public class InputManager {
 		System.out.println("CREAR VIDEO per a l'usuari actual seleccionat");
 		System.out.println("---------------------------------------------");
 		
-		if(this.currentUser==null) {
+		if(this.currentUser==null) { //si no hi ha cap usuari seleccionat mostra missatge per consola
 			System.out.println("Primer has de seleccionar un usuari!");
 			pause();
-		}else {
+		}else { //es demanen les dades per consola per a crear un video sense tags
 			boolean fieldFormat = false;
 			
 			while(fieldFormat==false) {
@@ -153,14 +181,21 @@ public class InputManager {
 					System.out.println("Torna a introduir el video de nou.");
 				}
 			}
-			addVideoTags(video);
-			this.currentUser.addVideo(video);
+			addVideoTags(video); //s'afegeixen tags al video
+			this.currentUser.addVideo(video); //s'afegeix el video a la llista de videos de l'usuari
 			
 			System.out.println("VIDEO CREAT CORRECTAMENT.");
 			pause();
 		}
 	}
 	
+	/**
+	 * Demana per consola introduir tags al video passat per parametre
+	 * Es pregunta a l'usuari si vol continuar afegint tags, en cas negatiu es finalitza la 
+	 * creació del video
+	 * 
+	 * @param video
+	 */
 	public void addVideoTags(Video video) {
 		
 		boolean end = false;
@@ -181,6 +216,11 @@ public class InputManager {
 		}
 	}
 	
+	/**
+	 * Mostra per pantalla tota la llista de videos de l'usuari actual seleccionat
+	 * Cada video es mostra a una linea de la consola incloent titol, url i llista de tags
+	 * 
+	 */
 	public void showVideos() {
 		
 		System.out.println("---------------------------------------------------------");
@@ -194,11 +234,11 @@ public class InputManager {
 			
 			List<Video> list = this.currentUser.getVideoList();
 			String output = "";
-			for (int i=0;i<list.size();i++) {
+			for (int i=0;i<list.size();i++) { //fa un recorregut dels videos de l'usuari actual seleccionat
 				
 				Video video = list.get(i);
 				
-				output ="";
+				output =""; //conte un String amb la informació del video que es vol mostrar per consola
 				output = i +". " + "TITOL = [" + video.getTitle() + "], URL = ["+video.getURL()+"] ";
 				output += ", TAGS = [";
 				
@@ -208,13 +248,20 @@ public class InputManager {
 				
 				output += "]";
 				
-				System.out.println(output);
+				System.out.println(output); //mostra un video de la llista per pantalla
 			}
 			if(list.size()==0) System.out.println("Aquest usuari no ha creat cap video.");
 			pause();
 		}
 	}
 	
+	/**
+	 * Metode reutilitzable per a demanar a l'usuari introduir un STRING per consola
+	 * Previament mostra per consola el missatge passat per parametre 
+	 * 
+	 * @param questionMessage
+	 * @return
+	 */
 	public String askString(String questionMessage) {
 		
 		System.out.println(questionMessage);
@@ -223,6 +270,14 @@ public class InputManager {
 		return answer;
 	}
 	
+	/**
+	 * Metode reutilitzable per a demanar a l'usuari introduir una DATA per consola
+	 * Previament mostra per consola el missatge passat per parametre 
+	 * Si el format de la data es incorrecte es torna a demanar la data de nou per consola
+	 * 
+	 * @param questionMessage
+	 * @return
+	 */
 	public Date askDate(String questionMessage){
 		
 		boolean dateFormat = false;
@@ -247,13 +302,30 @@ public class InputManager {
 		return date;
 	}
 	
-
+	/**
+	 * Es demana un número de tipus enter per consola
+	 * Si no té un format de tipus enter vàlid o el número no es troba dins del rang dels 
+	 * parametres "minInt" i "maxInt" s'informa de l'error per pantalla i es torna a demanar
+	 * un número a l'usuari
+	 */
 	public int askOption(int minInt, int maxInt) {
 		
-		return askInt("Selecciona una opció",minInt,maxInt);
+		return askInt("Selecciona una opció:",minInt,maxInt);
 		
 	}
 	
+	/**
+	 * Es demana un número de tipus enter per consola
+	 * Previament es mostra el missatge passat per parametre "questionMessage"
+	 * Si no té un format de tipus enter vàlid o el número no es troba dins del rang dels 
+	 * parametres "minInt" i "maxInt" s'informa de l'error per pantalla i es torna a demanar
+	 * un número a l'usuari
+	 * 
+	 * @param questionMessage
+	 * @param minInt
+	 * @param maxInt
+	 * @return
+	 */
 	public int askInt(String questionMessage,int minInt, int maxInt) {
 		
 		int option= 0;
@@ -277,6 +349,12 @@ public class InputManager {
 		
 		return option;
 	}
+	
+	/**
+	 *  Es fa una pausa per consola per a poder veure els últims missatges fins que l'usuari
+	 *  premi una tecla per consola
+	 *  
+	 */
 	
 	public void pause() {
 		System.out.println("Prem qualsevol tecla per a tornar al menu...");

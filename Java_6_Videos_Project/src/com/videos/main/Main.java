@@ -7,9 +7,11 @@ public class Main {
 	public static void main(String[] args) {
 
 
-		InputManager ui = new InputManager();
+		InputManager ui = new InputManager(); //encapsula la gestió d'entrada de dades per consola
 	
-		ui.showMenu();
+		ui.showMenu(); //Mostra el menu per pantalla
+		
+		ui.close();
 		
 	}
 	
