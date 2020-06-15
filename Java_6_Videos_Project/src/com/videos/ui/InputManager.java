@@ -357,7 +357,7 @@ public class InputManager {
 	 */
 	
 	public void pause() {
-		System.out.println("Prem qualsevol tecla per a tornar al menu...");
+		System.out.println("Prem la tecla ENTER/INTRO per a tornar al menu...");
 		this.input.nextLine();
 	}
 	
